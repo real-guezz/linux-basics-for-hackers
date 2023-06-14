@@ -1,12 +1,11 @@
 import crypt
 import itertools
 
-def probar (pass_,lista=[]):
+def probar ( pass_, lista = '', tamaño = 0):
     sal='$'+pass_.split('$')[1]+'$'+pass_.split('$')[2]
-    for p in lista:
+    for p in range ( 0, pow( len(lista), tamaño)):
         clave=''
-        for l in p:
-            clave=clave+l
+        clave.join(list( itertools.product( lista, repeat = tamaño))[p])
         key=crypt.crypt(clave,salt=sal)
         if pass_==key:
             print ('password obtained: ',clave)
@@ -22,10 +21,8 @@ def main():
     sign='@!#$%&/¡*+[]{}-_. '
     alfa='abcdefghijklmnopqrstuvwxyz'
     alfanum=list(alfa+' ')
-    passwords=[]
     print ('cracking password for: ',user)
-    for n in range (0,41):
-        passwords=list(itertools.product(alfanum,repeat=n))
-        probar(passk,passwords)
+    for n in range ( 0, 41):
+        probar( passk, alfanum, n)
 if __name__=='__main__':
     main()
